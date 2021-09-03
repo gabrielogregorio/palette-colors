@@ -27,18 +27,18 @@ export default class PalletColor implements PalletColorInterface{
     return {value:color, selected:false, id:this.objColors.length + 1}
   }
 
-  gerarClassPallet() {
+  private generateClassPallet() {
     return new PalletColor(this.objColors, this.objColors.length)
   }
 
   addColor(color: string): PalletColor {
     this.objColors.push(this.gerarObjColor(color))
-    return this.gerarClassPallet()
+    return this.generateClassPallet()
   }
 
   addColorInPosition(id: number, value: string): PalletColor {
     this.objColors.splice(id, 0, this.gerarObjColor(value))
-    return this.gerarClassPallet()
+    return this.generateClassPallet()
   }
 
   getAll(): any[] {
@@ -50,7 +50,7 @@ export default class PalletColor implements PalletColorInterface{
     return new PalletColor(newObject, newObject.length)
   }
 
-  novaCor(frente:boolean){
+  newColor(frente:boolean){
     let newColor: string = this.generateOneColor()
     let id:number = -1
 
@@ -74,10 +74,10 @@ export default class PalletColor implements PalletColorInterface{
       this.objColors.splice(id, 0, this.gerarObjColor(newColor))
     }
 
-    return this.gerarClassPallet()
+    return this.generateClassPallet()
   }
 
-  selectColor(id:number) {
+  selectPalette(id:number) {
     // Marca uma cor como selecionada
     this.objColors.forEach((item, i) => {
 
@@ -89,7 +89,7 @@ export default class PalletColor implements PalletColorInterface{
         }  
       }
     })
-    return this.gerarClassPallet()
+    return this.generateClassPallet()
   }
 
 
@@ -105,7 +105,7 @@ export default class PalletColor implements PalletColorInterface{
     return '#ffffff'
   }
 
-  generateOneColor(): string {
+  private generateOneColor(): string {
     /* Gera uma cor de forma aleatória */
     let item = ''
     for(let i = 0; i < 6; i++) {
@@ -120,16 +120,16 @@ export default class PalletColor implements PalletColorInterface{
     for(let i = 0; i < this.qtd; i++) {
       this.objColors.push(this.gerarObjColor(this.generateOneColor()))
     }
-    return this.gerarClassPallet()
+    return this.generateClassPallet()
   }
 
-  alterarCor(color:string, id:number) {
+  changeColor(color:string, id:number) {
     /* Recebe uma cor e um ID da posição da cor */
     this.objColors.forEach((item, i) => {
       if (id === i) {
         item.value = color
       }
     })
-    return this.gerarClassPallet()
+    return this.generateClassPallet()
   }
 }

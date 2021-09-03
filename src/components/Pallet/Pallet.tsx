@@ -1,21 +1,21 @@
 import styles from './pallet.module.css'
 import PalletColor from "../../model/palletColor"
 
+
 interface PalletProps {
-  palletItem: PalletColor
-  selectColor: (i: number) => void
-  alterarCor: (e:any, i:number) => void
+  pallet: PalletColor
+  selectPalette: (i: number) => void
+  changeColor: (e:any, i:number) => void
   copyColor: (e:any) => void
 }
 
 export default function Pallet(props: PalletProps) {
-
   function renderColor() {
-    return props.palletItem?.getAll()?.map((color, i) => {
+    return props.pallet?.getAll()?.map((color, i) => {
       let forecolor: string = PalletColor.breakHexForeground(color.value);
       return (
         <div
-          onClick={() => props.selectColor(i)}
+          onClick={() => props.selectPalette(i)}
           key={`${color.id}`}
           className={styles.cores}
           style={
@@ -27,10 +27,9 @@ export default function Pallet(props: PalletProps) {
           <input
             onClick={(e) => props.copyColor(e)}
             type="text" value={color.value}
-            onChange={(e) => props.alterarCor(e, i)}
+            onChange={(e) => props.changeColor(e, i)}
             style={{color: forecolor}}/>
         </div>
-
       )
     })
   }
