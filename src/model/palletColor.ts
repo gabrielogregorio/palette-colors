@@ -7,6 +7,7 @@ interface itemCor {
 interface PalletColorInterface {
   objColors: itemCor[]
   qtd: number
+  lastId: number
 }
 
 
@@ -17,18 +18,20 @@ const color:string[] = ['2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', '
 export default class PalletColor implements PalletColorInterface{
   objColors: itemCor[]
   qtd: number
+  lastId: number
 
-  constructor(objColors, qtd = 4) {
+  constructor(objColors, qtd = 4, lastId = 0) {
     this.objColors = objColors
     this.qtd = qtd
+    this.lastId = lastId
   }
 
   gerarObjColor(color): itemCor {
-    return {value:color, selected:false, id:this.objColors.length + 1}
+    return {value:color, selected:false, id:this.lastId++}
   }
 
   private generateClassPallet() {
-    return new PalletColor(this.objColors, this.objColors.length)
+    return new PalletColor(this.objColors, this.objColors.length, this.lastId++)
   }
 
   addColor(color: string): PalletColor {
@@ -47,12 +50,14 @@ export default class PalletColor implements PalletColorInterface{
 
   deleteSelected() {
     let newObject:itemCor[] = this.objColors.filter(item => item.selected != true)
-    return new PalletColor(newObject, newObject.length)
+    return new PalletColor(newObject, newObject.length, this.lastId++)
   }
 
   newColor(frente:boolean){
     let newColor: string = this.generateOneColor()
     let id:number = -1
+
+    this.lastId++
 
     this.objColors.forEach((item, i) => {
       if (item.selected) {
